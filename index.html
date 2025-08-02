@@ -624,10 +624,40 @@
     </script>
 <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'96884ed816a09a8d',t:'MTc1NDA4MjQ3Ny4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
 
-<audio autoplay loop>
-    <source src="background-music.mp3" type="audio/mpeg">
-    Your browser does not support the audio element.
+<!-- Background Music (initially paused) -->
+<audio id="bg-music" loop>
+  <source src="background-music.mp3" type="audio/mpeg">
+  Your browser does not support the audio element.
 </audio>
+
+<!-- Tap to play & fade in -->
+<script>
+  const audio = document.getElementById("bg-music");
+  audio.volume = 0;
+
+  function playAndFadeIn() {
+    audio.play().then(() => {
+      let vol = 0;
+      const fade = setInterval(() => {
+        if (vol < 1) {
+          vol += 0.05;
+          audio.volume = Math.min(vol, 1);
+        } else {
+          clearInterval(fade);
+        }
+      }, 200);
+    }).catch(err => {
+      console.log("Play failed:", err);
+    });
+
+    // Remove listener after first tap
+    document.removeEventListener("click", playAndFadeIn);
+  }
+
+  // Wait for user to tap anywhere
+  document.addEventListener("click", playAndFadeIn);
+</script>
 </body>
 </html>
+
 
