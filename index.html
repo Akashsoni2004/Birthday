@@ -369,64 +369,43 @@
 
         }
         .confetti-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            overflow: hidden;
-            z-index: 1; /* Keep it behind main content */
-        }
-        
-        .confetti {
-            position: absolute;
-            width: 10px;
-            height: 10px;
-            background: linear-gradient(45deg, #ff6ec4, #7873f5);
-            border-radius: 50%;
-            opacity: 0.8;
-            animation: fall linear infinite;
-        }
-        
-        @keyframes fall {
-            0% {
-                transform: translateY(-10px) rotate(0deg);
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(100vh) rotate(360deg);
-                opacity: 0;
-            }
-        }
-        
-        /* Randomize position, delay, and duration */
-        .confetti:nth-child(1) { left: 10%; animation-duration: 4s; animation-delay: 0s; }
-        .confetti:nth-child(2) { left: 20%; animation-duration: 5s; animation-delay: 1s; }
-        .confetti:nth-child(3) { left: 30%; animation-duration: 6s; animation-delay: 0.5s; }
-        .confetti:nth-child(4) { left: 40%; animation-duration: 4s; animation-delay: 1.2s; }
-        .confetti:nth-child(5) { left: 50%; animation-duration: 5s; animation-delay: 0.3s; }
-        .confetti:nth-child(6) { left: 60%; animation-duration: 6s; animation-delay: 1.5s; }
-        .confetti:nth-child(7) { left: 70%; animation-duration: 4.5s; animation-delay: 0.8s; }
-        .confetti:nth-child(8) { left: 80%; animation-duration: 5.5s; animation-delay: 1s; }
-        .confetti:nth-child(9) { left: 90%; animation-duration: 6s; animation-delay: 1.3s; }
-        .confetti:nth-child(10){ left: 95%; animation-duration: 4s; animation-delay: 0.6s; }
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 9999; /* Make sure it's on top of card */
+}
+
+.confetti {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: linear-gradient(45deg, #ff6ec4, #7873f5);
+  border-radius: 50%;
+  opacity: 0.8;
+  animation: fall ease-in-out infinite;
+}
+
+@keyframes fall {
+  0% {
+    transform: translateY(-20px) rotate(0deg);
+    opacity: 1;
+  }
+  50% {
+    transform: translateY(50vh) rotate(180deg);
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateY(100vh) rotate(360deg);
+    opacity: 0;
+  }
+}
     </style>
 </head>
 <body class="flex items-center justify-center">
-     <div class="confetti-container">
-            <!-- Add multiple confetti pieces -->
-            <div class="confetti"></div>
-            <div class="confetti"></div>
-            <div class="confetti"></div>
-            <div class="confetti"></div>
-            <div class="confetti"></div>
-            <div class="confetti"></div>
-            <div class="confetti"></div>
-            <div class="confetti"></div>
-            <div class="confetti"></div>
-            <div class="confetti"></div>
-     </div>
     <div class="stars" id="stars"></div>
     
     <div class="card flex flex-col items-center justify-center p-8">
@@ -713,8 +692,26 @@
   // Wait for user to tap anywhere
   document.addEventListener("click", playAndFadeIn);
 </script>
+
+    <div class="confetti-container" id="confetti-container"></div>
+
+<script>
+  const container = document.getElementById('confetti-container');
+
+  for (let i = 0; i < 100; i++) {
+    const confetti = document.createElement('div');
+    confetti.classList.add('confetti');
+    
+    // Random position and animation delay/duration
+    confetti.style.left = `${Math.random() * 100}vw`;
+    confetti.style.animationDelay = `${Math.random() * 5}s`;
+    confetti.style.animationDuration = `${4 + Math.random() * 4}s`; // 4s to 8s
+    container.appendChild(confetti);
+  }
+</script>
 </body>
 </html>
+
 
 
 
