@@ -578,8 +578,25 @@
   // Wait for user to tap anywhere
   document.addEventListener("click", playAndFadeIn);
 </script>
+    <script>
+  const audio = document.getElementById('bgMusic');
+
+  // Pause music when tab is hidden
+  document.addEventListener("visibilitychange", function () {
+    if (document.hidden) {
+      audio.pause();
+    } else {
+      audio.play();
+    }
+  });
+
+  // Pause when switching apps or browser is not focused
+  window.addEventListener("blur", () => audio.pause());
+  window.addEventListener("focus", () => audio.play());
+    </script>
 </body>
 </html>
+
 
 
 
