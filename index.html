@@ -40,25 +40,6 @@
             transform: translateY(-5px);
         }
         
-        .confetti {
-            position: absolute;
-            width: 10px;
-            height: 10px;
-            opacity: 0;
-            animation: fall linear forwards;
-        }
-        
-        @keyframes fall {
-            0% {
-                transform: translateY(-100px) rotate(0deg);
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(calc(80vh + 100px)) rotate(360deg);
-                opacity: 0;
-            }
-        }
-        
         .message {
             opacity: 0;
             transform: translateY(20px);
@@ -513,67 +494,7 @@
             }
         }
 
-        // Create confetti
-        function createConfetti() {
-            const container = document.getElementById('confetti-container');
-            container.innerHTML = '';
-            
-            const colors = ['#FF85A2', '#A5D8FF', '#FFD6E0', '#9381FF', '#B8C0FF', '#FFDE59'];
-            
-            for (let i = 0; i < 100; i++) {
-                const confetti = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-                confetti.classList.add('confetti');
-                confetti.setAttribute('width', '10');
-                confetti.setAttribute('height', '10');
-                confetti.setAttribute('viewBox', '0 0 10 10');
-                
-                // Randomly choose between square, circle, and triangle
-                const shape = Math.floor(Math.random() * 3);
-                let shapeElement;
-                
-                if (shape === 0) {
-                    shapeElement = document.createElementNS("http://www.w3.org/2000/svg", "rect");
-                    shapeElement.setAttribute('x', '0');
-                    shapeElement.setAttribute('y', '0');
-                    shapeElement.setAttribute('width', '10');
-                    shapeElement.setAttribute('height', '10');
-                } else if (shape === 1) {
-                    shapeElement = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-                    shapeElement.setAttribute('cx', '5');
-                    shapeElement.setAttribute('cy', '5');
-                    shapeElement.setAttribute('r', '5');
-                } else {
-                    shapeElement = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
-                    shapeElement.setAttribute('points', '5,0 10,10 0,10');
-                }
-                
-                shapeElement.setAttribute('fill', colors[Math.floor(Math.random() * colors.length)]);
-                confetti.appendChild(shapeElement);
-                container.appendChild(confetti);
-                
-                // Position randomly
-                confetti.style.left = `${Math.random() * 100}%`;
-                
-                // Random size
-                const size = Math.random() * 15 + 5;
-                confetti.style.width = `${size}px`;
-                confetti.style.height = `${size}px`;
-                
-                // Random animation duration
-                const duration = Math.random() * 3 + 2;
-                confetti.style.animationDuration = `${duration}s`;
-                
-                // Random animation delay
-                confetti.style.animationDelay = `${Math.random() * 0.5}s`;
-            }
-        }
-
-        function triggerConfetti() {
-            createConfetti();
-            document.querySelectorAll('.confetti').forEach(confetti => {
-                confetti.style.opacity = '1';
-            });
-        }
+        
 
         function triggerStars() {
             createStars();
@@ -659,6 +580,7 @@
 </script>
 </body>
 </html>
+
 
 
 
