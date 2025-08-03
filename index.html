@@ -551,51 +551,53 @@
   Your browser does not support the audio element.
 </audio>
 
-<!-- Tap to play & fade in -->
 <script>
   const audio = document.getElementById("bg-music");
   audio.volume = 0;
+  let isPlaying = false;
 
   function playAndFadeIn() {
     audio.play().then(() => {
+      isPlaying = true;
       let vol = 0;
       const fade = setInterval(() => {
         if (vol < 1) {
           vol += 0.05;
-          audio.volume = Math.min(vol, 1);
+          audio.volume = vol.toFixed(2);
         } else {
           clearInterval(fade);
         }
-      }, 200);
+      }, 50);
     }).catch(err => {
       console.log("Play failed:", err);
     });
-
-    // Remove listener after first tap
     document.removeEventListener("click", playAndFadeIn);
   }
 
-  // Wait for user to tap anywhere
   document.addEventListener("click", playAndFadeIn);
-</script>
-    <script>
-  const audio = document.getElementById("bg-music");
 
-  // Pause music when tab is hidden
+  // Pause music when tab is hidden or browser is not focused
   document.addEventListener("visibilitychange", function () {
-    if (document.hidden) {
+    if (document.hidden || document.visibilityState === "hidden") {
       audio.pause();
-    } else {
-      audio.play();
+      isPlaying = false;
+    } else if (isPlaying) {
+      playAndFadeIn();
     }
   });
 
   // Pause when switching apps or browser is not focused
-  window.addEventListener("blur", () => audio.pause());
-  window.addEventListener("focus", () => audio.play());
-    </script>
+  window.addEventListener("blur", () => {
+    audio.pause();
+    isPlaying = false;
+  });
+
+  // No need to play on focus, as playAndFadeIn will be called on visibility change
+  // if the tab is re-focused and music was playing before.
+</script>
 </body>
 </html>
+
 
 
 
